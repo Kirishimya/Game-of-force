@@ -1,0 +1,104 @@
+@font-face {
+    font-family: 'Star Jedi';
+    src: url("../assets/Starjedi.ttf");
+}
+body
+{
+    background: url("../assets/dark-space.png");
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: yellow;
+    font-family: 'Star Jedi';
+}
+
+.chute
+{
+    border: 0;
+    font-family: 'Star Jedi';
+}
+
+.boneco
+{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;/*necessário para cobrir as partes da imagem*/
+}
+.darth-vader
+{
+    width: 300px;  
+}
+.cabeca
+{
+    width: 300px;
+    height: 130px;
+
+    background:black;
+
+    position: absolute;/*elemento chave para cobrir a imagem*/
+    top: 0;
+}
+.braco-direito
+{
+    width: 100px;
+    height: 130px;
+
+    background:black;
+
+    position: absolute;/*elemento chave para cobrir a imagem*/
+    right: 0%;
+    bottom: 90;
+}
+.braco-esquerdo
+{
+    width: 100px;
+    height: 130px;
+
+    background:black;
+
+    position: absolute;/*elemento chave para cobrir a imagem*/
+    left: 0%;
+    bottom: 90;
+}
+.perna-esquerda
+{
+    width: 150px;
+    height: 90px;
+
+    background:black;
+
+    position: absolute;/*elemento chave para cobrir a imagem*/
+    bottom: 0%;
+    left: 0%;
+}
+.perna-direita
+{
+    width: 150px;
+    height: 90px;
+
+    background:black;
+
+    position: absolute;/*elemento chave para cobrir a imagem*/
+    bottom: 0%;
+    right: 0%;
+}
+.torso
+{
+    width: 100px;
+    height: 130px;
+
+    background:black;
+
+    position: absolute;/*elemento chave para cobrir a imagem*/
+    bottom: 90px;
+}
+.dica
+{
+    font-size: small;
+}
