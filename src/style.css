@@ -98,6 +98,18 @@ body
     position: absolute;/*elemento chave para cobrir a imagem*/
     bottom: 90px;
 }
+.caixa-palavra
+{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.palavra
+{
+    font-size: large;
+}
 .dica
 {
     font-size: small;
