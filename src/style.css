@@ -13,11 +13,25 @@ body
     color: yellow;
     font-family: 'Star Jedi';
 }
-
+.nova-palavra
+{
+    border: 0;
+    font-family: 'Star Jedi';
+}
 .chute
 {
     border: 0;
     font-family: 'Star Jedi';
+}
+.entrada-de-letra, .entrada-de-palavra
+{
+    border: 0;
+    font-family: 'Star Jedi';
+    font-weight: bold;
+}
+.entrada-de-letra
+{
+        
 }
 .chute-palavra
 {
@@ -25,7 +39,14 @@ body
     border-top: solid 3px;
     font-family: 'Star Jedi';
 }
-
+.chute:hover
+{
+    background: crimson;
+}
+.chute-palavra:hover
+{
+    background: lightgreen;
+}
 .boneco
 {
     width: 300px;
@@ -35,6 +56,15 @@ body
     align-items: center;
 
     position: relative;/*necessário para cobrir as partes da imagem*/
+}
+.aviso
+{
+    visibility: hidden;
+    position: absolute;
+    font-size: large;
+    color: blue;
+    text-align: center;
+    top: 100px;
 }
 .darth-vader
 {

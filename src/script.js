@@ -1,6 +1,9 @@
 //poderia transformar jogador em um objeto
 var botaodeChutePalavra = document.getElementsByClassName("chute-palavra").item(0);
 var botaodeChute = document.getElementsByClassName("chute").item(0);
+var botaoNovaPalavra = document.getElementsByClassName("nova-palavra").item(0);
+var entradaLetra = document.getElementsByClassName("entrada-de-letra").item(0);
+var entradaPalavra = document.getElementsByClassName("entrada-de-palavra").item(0);
 var _aDica       = document.getElementsByClassName("dica").item(0);/*Depois de muita pesquisa achei o problema*/
 var _aPalavra    = document.getElementsByClassName("palavra").item(0);/* document.getElementsByClassName 
                                                                         retornava uma lista de elementos*/
@@ -12,6 +15,10 @@ botaodeChute.addEventListener('click', ()=>{
 });
 botaodeChutePalavra.addEventListener('click', ()=>{
     chutarPalavra();
+    atualizarJogador();
+});
+botaoNovaPalavra.addEventListener('click', ()=>{
+    sorteiaDicaePalavra();
     atualizarJogador();
 });
 //valores chave
@@ -48,6 +55,9 @@ function sorteiaDicaePalavra()
 {   
     dica = dicas[Math.round(Math.random()*dicas.length)%dicas.length];
     //alert(dica);
+    letrasChutadas = [];
+    letraChutada = -1;
+    vidas = vidasMax;
     _aDica.textContent = "Dica: " + dica;
     let wordset = mapaDePalavras.get(dica);
     palavraSelecionada = wordset[Math.round(Math.random()*wordset.length)%wordset.length];
@@ -103,26 +113,28 @@ function mostraPalavra()
 }
 function chutarLetra()
 {
-    do
+
+    letraChutada = entradaLetra.value;
+    console.log(letraChutada);
+    // if(letraChutada==null)//quando o prompt é cancelado, ele retorna null//não uso mais o prompt
+    // {
+    //     letraChutada = -1;
+    //     return;
+    // }
+    if(letraChutada.length>1)
     {
-        letraChutada = prompt("Entre uma letra.");
-        console.log(letraChutada);
-        if(letraChutada==null)//quando o prompt é cancelado, ele retorna null
-        {
-            letraChutada = -1;
-            break;
-        }
-        if(letraChutada.length>1)
-        {
-            alert("Entre apenas uma letra.");
-            letraChutada = -1;
-        }
-        if(letrasChutadas.includes(letraChutada))
-        {
-            alert("Essa letra já foi chutada!");
-            letraChutada = -1;
-        }
-    }while(letraChutada.length>1||letraChutada==-1);
+        alert("Entre apenas uma letra.");
+        letraChutada = -1;
+        return;
+    }
+    if(letrasChutadas.includes(letraChutada))
+    {
+        alert("Essa letra já foi chutada!");
+        entradaLetra.value = "";
+        letraChutada = -1;
+        return;
+    }
+    
     letrasChutadas.push(letraChutada);
     mostraPalavra();
 }
@@ -156,18 +168,12 @@ function atualizarJogador()
     {
         
         setTimeout(()=>alert("A força estava com você e você venceu esta rodada!"), 1000);
-        letrasChutadas = [];
-        letraChutada = -1;
         pontuacao++;
-        vidas = vidasMax;
         sorteiaDicaePalavra();
     }
     if(vidas==0)
     {
         setTimeout(alert("Você perdeu esta rodada! Tente outra vez e que a força esteja com você!"), 1000);
-        letrasChutadas = [];
-        letraChutada = -1;
-        vidas = vidasMax;
         sorteiaDicaePalavra();
     }
     let hp = status_do_jogador.item(0);
