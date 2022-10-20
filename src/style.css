@@ -18,6 +18,10 @@ body
     border: 0;
     font-family: 'Star Jedi';
 }
+.nova-palavra:hover
+{
+    background: crimson;
+}
 .chute
 {
     border: 0;
@@ -29,10 +33,7 @@ body
     font-family: 'Star Jedi';
     font-weight: bold;
 }
-.entrada-de-letra
-{
-        
-}
+
 .chute-palavra
 {
     border: 0;
@@ -62,9 +63,17 @@ body
     visibility: hidden;
     position: absolute;
     font-size: large;
-    color: blue;
+    font-weight: 900;
     text-align: center;
-    top: 100px;
+    top: 130px;
+}
+.venceu
+{
+    color: blue;
+}
+.perdeu
+{
+    color: #ed0800;
 }
 .darth-vader
 {
@@ -174,8 +183,4 @@ body
     position: absolute;
     top: 10px;
     left: 40px;
-}
-.caixa-de-letra
-{
-
 }

@@ -9,6 +9,8 @@ var _aPalavra    = document.getElementsByClassName("palavra").item(0);/* documen
                                                                         retornava uma lista de elementos*/
 var darth_vader = document.getElementsByClassName("parte-do-boneco");
 var status_do_jogador = document.getElementsByClassName("status-do-jogador");
+var aviso_endgame = document.getElementsByClassName("aviso");
+const WIN = 1;const LOSE = 0;
 botaodeChute.addEventListener('click', ()=>{
     chutarLetra();
     atualizarJogador();
@@ -53,6 +55,8 @@ var numeroMaxdeChutes = 999;
 //compare a palavraAmostra com a selecionada
 function sorteiaDicaePalavra()
 {   
+    resetDarthVader();
+    resetAvisos();
     dica = dicas[Math.round(Math.random()*dicas.length)%dicas.length];
     //alert(dica);
     letrasChutadas = [];
@@ -69,6 +73,11 @@ function sorteiaDicaePalavra()
 }
 function mostraPalavra()
 {
+    if(aviso_endgame.item(WIN).style.visibility=="visible"||aviso_endgame.item(LOSE).style.visibility=="visible")
+    {
+        _aPalavra.textContent = palavraSelecionada;
+        return;
+    }
     if(letrasChutadas.length<numeroMaxdeChutes){ 
         if(letrasChutadas.length==0)
         {
@@ -90,16 +99,11 @@ function mostraPalavra()
                 {
                     acertou = true;
                     palavraAmostra = palavraAmostra.substring(0, k)+(letraChutada.toLowerCase()==palavraSelecionada[k]?letraChutada[0]:letraChutada.toUpperCase())+palavraAmostra.substring(k+1);
-                    console.log(palavraAmostra);
+                    //console.log(palavraAmostra);
                 }
             }
             //se errou, então DÃ DÃ DÃ~ TÃ~ TÃ DÃ~
-            if(!acertou)
-            {
-                darth_vader.item(vidasMax-vidas).style.visibility = "hidden";
-                vidas--;
-                //console.log(darth_vader);
-            }
+            erou(acertou);
             
             letraChutada = -1;
         }
@@ -111,19 +115,41 @@ function mostraPalavra()
     
     _aPalavra.textContent = palavraAmostra;
 }
+function erou(acertou)
+{
+    if(!acertou)
+    {
+        darth_vader.item(vidasMax-vidas).style.visibility = "hidden";
+        vidas--;
+        //console.log(darth_vader);
+    }
+}
 function chutarLetra()
 {
 
+    if((numeroMaxdeChutes-letrasChutadas.length)==0)
+    {
+        alert("Tente adivinhar a palavra.");
+        return;
+    }
     letraChutada = entradaLetra.value;
-    console.log(letraChutada);
+    // console.log(letraChutada);
     // if(letraChutada==null)//quando o prompt é cancelado, ele retorna null//não uso mais o prompt
     // {
     //     letraChutada = -1;
     //     return;
     // }
+    //caso o jogador não escreva nada
+    if(letraChutada=="")
+    {
+        alert("Você não escreveu nada. /(.-.)\\");
+        letraChutada = -1;
+        return;
+    }
     if(letraChutada.length>1)
     {
         alert("Entre apenas uma letra.");
+        entradaLetra.value = "";
         letraChutada = -1;
         return;
     }
@@ -138,43 +164,64 @@ function chutarLetra()
     letrasChutadas.push(letraChutada);
     mostraPalavra();
 }
+var palavraAnterior = "";
 function chutarPalavra()
 {
-    let chutePalavra = prompt("Entre uma letra.");
-    chutePalavra = chutePalavra.substring(0, 1).toUpperCase()+chutePalavra.substring(1);
-    console.log(chutePalavra);
-    if(chutePalavra==null)//quando o prompt é cancelado, ele retorna null
-    {   
-        alert("Você não escreveu nada. /(.-.)\\");
+    let chutePalavra = entradaPalavra.value;
+    if(chutePalavra==palavraAnterior)
+    {
+        alert("Essa palavra já foi entrada uma vez.");
         return;
     }
+    palavraAnterior = chutePalavra;
+    chutePalavra = chutePalavra.substring(0, 1).toUpperCase()+chutePalavra.substring(1);
+    // console.log(chutePalavra);
+    if(chutePalavra.length>palavraSelecionada.length||chutePalavra.length<palavraSelecionada.length)
+    {
+        alert("Palavra maior ou menor que a palavra em questão.");
+        return;
+    }
+    // if(chutePalavra==null)//quando o prompt é cancelado, ele retorna null//não uso prompt
+    // {   
+    //     alert("Você não escreveu nada. /(.-.)\\");
+    //     return;
+    // }
     if(chutePalavra!=palavraSelecionada)
     {
-        vidas--;
-        alert("Não... eu não sinto a força dessa palavra.");
+        erou(!true);
+        vidas>0?alert("Não... eu não sinto a força dessa palavra."):null;
         return;
     }
     palavraAmostra = chutePalavra;
     _aPalavra.textContent = palavraAmostra;
     
-    setTimeout(alert("Sim! A força está com você!"), 1000);
     
     
+    
+}
+function resetDarthVader()
+{
+    for(let i = 0; i<vidasMax; i++)
+    {
+        darth_vader.item(i).style.visibility = "visible";
+    }
+}
+function resetAvisos()
+{
+    aviso_endgame.item(WIN).style.visibility = "hidden";   
+    aviso_endgame.item(LOSE).style.visibility = "hidden";   
 }
 function atualizarJogador()
 {
     //console.log(status_do_jogador)
     if(palavraAmostra==palavraSelecionada)
     {
-        
-        setTimeout(()=>alert("A força estava com você e você venceu esta rodada!"), 1000);
+        aviso_endgame.item(WIN).style.visibility = "visible";   
         pontuacao++;
-        sorteiaDicaePalavra();
     }
     if(vidas==0)
     {
-        setTimeout(alert("Você perdeu esta rodada! Tente outra vez e que a força esteja com você!"), 1000);
-        sorteiaDicaePalavra();
+        aviso_endgame.item(LOSE).style.visibility = "visible";   
     }
     let hp = status_do_jogador.item(0);
     let _pontuacao = status_do_jogador.item(1);
@@ -189,5 +236,5 @@ sorteiaDicaePalavra();
 mostraPalavra();
 atualizarJogador();
 
-console.log(palavraSelecionada);
+//console.log(palavraSelecionada);
 //alert(_aDica.textContent);
